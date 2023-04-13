@@ -27,12 +27,9 @@ try:
     print('正在取得密碼')
     password_workbook = opxl.load_workbook(path_password)
     password_sheet = password_workbook.active
-    password_dic = {}
-    for pwrow in range(2, password_sheet.max_row+1):
-        for col in range(1, password_sheet.max_column):
-            key = password_sheet.cell(row=pwrow, column=1).value
-            value = password_sheet.cell(row=pwrow, column=2).value
-            password_dic[key]= value
+    password_sheet = password_workbook.active
+    password_dic = {password_sheet.cell(row=pwrow, column=1).value: password_sheet.cell(row=pwrow, column=2).value
+                    for pwrow in range(1, password_sheet.max_row+1)}
     print('取得密碼成功')                  
 except:
     print('取得密碼失敗')
