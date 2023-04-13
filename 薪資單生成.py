@@ -1,6 +1,8 @@
 import openpyxl as opxl
 from docx import Document
 import os
+import win32com.client as win32
+word = win32.Dispatch('Word.Application')
 #指定檔案位置
 try:
     path = os.getcwd()#當前工作目錄
@@ -42,6 +44,22 @@ try:
         title_text = word_file.paragraphs[0].text.replace('#發薪日期', paydate)#取範本WORD中第一段文字動態替換日期
         word_file.paragraphs[0].text = title_text#將變數存回文件中!!!
         word_file.save(os.path.join(generate_path, f"{paydate}薪資單-{name}.docx"))#儲存並命名標題完成一次循環
+    print('薪資單生成完畢')
 except:
     print('填入過程中出現錯誤')
+    raise
+#加密所有檔案
+try:
+    unencyptfiles = os.listdir(generate_path)
+    for file_name in unencyptfiles:
+        file_path = os.path.join(generate_path, file_name)
+        doc = word.Documents.Open(file_path)
+        doc.Password = "0000"
+        doc.Save()
+        doc.Close()
+        print('已加密',file_name)
+    word.Quit()
+    print('薪資單加密完畢')
+except:
+    print('獲取檔名失敗')
     raise
