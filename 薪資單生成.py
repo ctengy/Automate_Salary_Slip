@@ -1,12 +1,14 @@
+import os
+import io
+import sys
+
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import openpyxl as opxl
 from docx import Document
 from docx.oxml.ns import qn
 from docx.shared import Pt
-import os
-import io
-import sys
+
 import msoffcrypto as mso
 import win32com.client as win32
 
@@ -166,7 +168,7 @@ def close_window():
 
 # 主函數
 def main():
-    global input_start_row, input_end_row, detail, window, lable_detail, input_password
+    global input_start_row, input_end_row, window, lable_detail, input_password
 
     window = tk.Tk()
     window.title("薪資單生成程式")
